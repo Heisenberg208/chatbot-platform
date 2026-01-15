@@ -5,37 +5,37 @@
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                     Client Layer                        │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐ │
-│  │   Browser    │  │   Streamlit  │  │   Mobile     │ │
-│  │   (React)    │  │      UI      │  │     App      │ │
-│  └──────────────┘  └──────────────┘  └──────────────┘ │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐   │
+│  │   Browser    │  │   REACT      │  │   Mobile     │   │
+│  │   (React)    │  │      UI      │  │     App      │   │
+│  └──────────────┘  └──────────────┘  └──────────────┘   │
 └───────────────────────┬─────────────────────────────────┘
                         │ HTTPS/REST
 ┌───────────────────────▼─────────────────────────────────┐
 │                  API Gateway Layer                      │
 │              (FastAPI Application)                      │
-│                                                          │
-│  ┌────────────────────────────────────────────────┐    │
-│  │           Authentication Middleware            │    │
-│  │              (JWT Validation)                  │    │
-│  └────────────────────┬───────────────────────────┘    │
+│                                                         │
+│  ┌────────────────────────────────────────────────┐     │
+│  │           Authentication Middleware            │     │
+│  │              (JWT Validation)                  │     │
+│  └────────────────────┬───────────────────────────┘     │
 │                       │                                 │
-│  ┌────────────────────▼───────────────────────────┐    │
-│  │              API Routes Layer                  │    │
-│  │   /auth  /users  /projects  /prompts  /chat   │    │
-│  └────────────────────┬───────────────────────────┘    │
+│  ┌────────────────────▼───────────────────────────┐     │
+│  │              API Routes Layer                  │     │
+│  │   /auth  /users  /projects  /prompts  /chat    │      │
+│  └────────────────────┬───────────────────────────┘     │
 └───────────────────────┼─────────────────────────────────┘
                         │
 ┌───────────────────────▼─────────────────────────────────┐
 │               Business Logic Layer                      │
 │                  (Service Classes)                      │
-│                                                          │
-│  ┌──────────────────┐         ┌──────────────────┐    │
-│  │  Chat Service    │◄────────┤  LLM Provider    │    │
-│  │  - Session Mgmt  │         │   Abstraction    │    │
-│  │  - Message Build │         │  - OpenAI        │    │
-│  │  - Response Gen  │         │  - OpenRouter    │    │
-│  └────────┬─────────┘         └──────────────────┘    │
+│                                                         │
+│  ┌──────────────────┐         ┌──────────────────┐       
+│  │  Chat Service    │◄────────┤  LLM Provider    │      │
+│  │  - Session Mgmt  │         │   Abstraction    │      │
+│  │  - Message Build │         │  - OpenAI        │      │
+│  │  - Response Gen  │         │  - OpenRouter    │      │
+│  └────────┬─────────┘         └──────────────────┘      │
 └───────────┼─────────────────────────────────────────────┘
             │
 ┌───────────▼─────────────────────────────────────────────┐
@@ -43,8 +43,8 @@
 │                                                          │
 │  ┌──────────────────────────────────────────────────┐  │
 │  │            SQLAlchemy ORM Models                 │  │
-│  │  User  Project  Prompt  ChatSession  Message    │  │
-│  └────────────────────┬─────────────────────────────┘  │
+│  │  User  Project  Prompt  ChatSession  Message     │  │
+│  └────────────────────┬─────────────────────────────┘   │
 │                       │                                 │
 │  ┌────────────────────▼─────────────────────────────┐  │
 │  │           PostgreSQL Database                    │  │
@@ -215,6 +215,7 @@ Benefits:
 ## Deployment Architecture
 
 ### Development
+
 ```
 ┌─────────────────────────────────┐
 │     Developer Machine           │
@@ -313,18 +314,14 @@ Benefits:
 - Load balancer distributes requests
 
 ### Database Optimization
+
 - Indexed foreign keys
 - Connection pooling
 - Async queries
 - Read replicas for scale
 
-### Caching Strategy (Future)
-- Redis for session caching
-- Cache user data
-- Cache project/prompt data
-- TTL-based invalidation
-
 ### Rate Limiting (Future)
+
 - Per-user rate limits
 - Per-project rate limits
 - Token bucket algorithm

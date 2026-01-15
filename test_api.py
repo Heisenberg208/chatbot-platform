@@ -202,7 +202,7 @@ def main():
     print(f"\nSession ID: {session_id}")
     print(f"Project ID: {project['id']}")
     print("\nYou can now use these IDs to continue testing via:")
-    print("- Streamlit UI: streamlit run frontend/streamlit_app.py")
+    print("- Frontend UI/frontend")
     print("- API Docs: http://localhost:8000/docs")
     print("- cURL commands from the README")
 

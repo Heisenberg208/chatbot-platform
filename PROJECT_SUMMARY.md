@@ -69,7 +69,7 @@ A **production-ready, multi-tenant chatbot platform** with clean architecture, c
 
 ### Frontend
 
-- ✅ **Streamlit UI**: Minimal functional interface
+- ✅ **React UI**: Minimal functional interface
 - ✅ **Chat Interface**: Message history and sessions
 - ✅ **Project Management**: Create and select projects
 - ✅ **Prompt Management**: Add system prompts
@@ -138,8 +138,6 @@ chatbot-platform/
 │       └── test_api.py
 │
 └── frontend/                   # Frontend application
-    ├── streamlit_app.py       # Streamlit UI
-    └── requirements.txt
 ```
 
 ## 🎯 Design Principles Implemented
@@ -172,13 +170,16 @@ poetry run alembic upgrade head
 poetry run uvicorn app.main:app --reload
 ```
 
-### Option 3: Streamlit UI
+### Option 3: Frontend t UI
+
 ```bash
 docker-compose up -d  # Start backend
 cd frontend
-pip install -r requirements.txt
-streamlit run streamlit_app.py
 ```
+
+### Frontend UI
+[Frontend Readme](frontend/README.md)
+
 
 ## 📚 Key Files to Review
 
@@ -226,14 +227,6 @@ open http://localhost:8000/docs
 5. Chat: POST /chat
 ```
 
-## 🎨 Frontend
-
-The Streamlit UI provides:
-- User registration and login
-- Project management
-- Prompt configuration
-- Chat interface with history
-- Session management
 
 ## 🏗️ Architecture Highlights
 

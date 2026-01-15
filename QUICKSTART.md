@@ -2,18 +2,11 @@
 
 Get up and running with the Chatbot Platform in 5 minutes!
 
-## Prerequisites
-
-- Docker and Docker Compose installed
-- **Groq API key (FREE!)** - Get it at: https://console.groq.com/keys
-  - No credit card required!
-  - Generous free tier: 30 requests/minute
-
 ## 1. Clone and Setup
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/Heisenberg208/chatbot-platform.git
 cd chatbot-platform
 
 # Copy environment template
@@ -62,10 +55,10 @@ python test_api.py
 # Install frontend dependencies
 cd frontend
 pip install -r requirements.txt
-
-# Start Streamlit
-streamlit run streamlit_app.py
 ```
+# Start Fronend
+[Frontend Readme](frontend/README.md)
+
 
 Open http://localhost:8501 in your browser.
 
@@ -121,48 +114,6 @@ docker-compose down
 # Access database
 docker-compose exec db psql -U chatbot -d chatbot_db
 ```
-
-## Using the API
-
-### Register
-```bash
-curl -X POST http://localhost:8000/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"email":"user@example.com","password":"password123"}'
-```
-
-### Login
-```bash
-curl -X POST http://localhost:8000/auth/login \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "username=user@example.com&password=password123"
-```
-
-### Create Project
-```bash
-TOKEN="your-token-here"
-
-curl -X POST http://localhost:8000/projects \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"name":"My Bot","description":"A helpful bot"}'
-```
-
-### Chat
-```bash
-PROJECT_ID="your-project-id"
-
-curl -X POST http://localhost:8000/chat \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d "{\"project_id\":\"$PROJECT_ID\",\"message\":\"Hello!\"}"
-```
-
-## API Documentation
-
-Interactive API docs available at:
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
 
 ## Troubleshooting
 

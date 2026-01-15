@@ -2,7 +2,7 @@
 
 A production-ready, multi-tenant chatbot platform built with FastAPI, PostgreSQL, and LLM integration. This platform enables users to create AI-powered chatbots (agents) with customizable system prompts and persistent chat sessions.
 
-> **Get started in 2 minutes**: See [GROQ_SETUP.md](GROQ_SETUP.md)
+
 
 ## Table of Contents
 
@@ -23,7 +23,7 @@ A production-ready, multi-tenant chatbot platform built with FastAPI, PostgreSQL
 
 The platform follows a clean, layered architecture:
 
-```
+```sh
 ┌─────────────┐
 │   Client    │
 └──────┬──────┘
@@ -158,27 +158,27 @@ chatbot-platform/
 
 1. **Clone the repository**:
 ```bash
-git clone <repository-url>
+git clone https://github.com/Heisenberg208/chatbot-platform.git
 cd chatbot-platform
 ```
 
-2. **Install Poetry** (if not already installed):
+1. **Install Poetry** (if not already installed):
 ```bash
 curl -sSL https://install.python-poetry.org | python3 -
 ```
 
-3. **Install dependencies**:
+1. **Install dependencies**:
 ```bash
 poetry install
 ```
 
-4. **Set up environment variables**:
+1. **Set up environment variables**:
 ```bash
 cp .env.example .env
 # Edit .env with your configuration
 ```
 
-5. **Start PostgreSQL** (if not using Docker):
+1. **Start PostgreSQL** (if not using Docker):
 ```bash
 # Using Docker for just the database
 docker run -d \
@@ -190,18 +190,18 @@ docker run -d \
   postgres:15-alpine
 ```
 
-6. **Run database migrations**:
+1. **Run database migrations**:
 ```bash
 cd backend
 poetry run alembic upgrade head
 ```
 
-7. **Start the development server**:
+1. **Start the development server**:
 ```bash
 poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-8. **Access the API**:
+1. **Access the API**:
 - API: http://localhost:8000
 - Interactive docs: http://localhost:8000/docs
 - Alternative docs: http://localhost:8000/redoc
@@ -388,95 +388,6 @@ Response:
 }
 ```
 
-## Usage Flow
-
-### 1. User Registration and Authentication
-
-```bash
-# Register
-curl -X POST http://localhost:8000/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"email":"user@example.com","password":"password123"}'
-
-# Login
-curl -X POST http://localhost:8000/auth/login \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "username=user@example.com&password=password123"
-
-# Save the access_token from response
-TOKEN="<access_token>"
-```
-
-### 2. Create a Project
-
-```bash
-curl -X POST http://localhost:8000/projects \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "My Chatbot",
-    "description": "A helpful assistant"
-  }'
-
-# Save the project id
-PROJECT_ID="<project_id>"
-```
-
-### 3. Add System Prompts
-
-```bash
-curl -X POST http://localhost:8000/projects/$PROJECT_ID/prompts \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "content": "You are a knowledgeable AI assistant. Provide clear, concise answers."
-  }'
-```
-
-### 4. Start Chatting
-
-```bash
-# First message (creates new session)
-curl -X POST http://localhost:8000/chat \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "project_id": "'$PROJECT_ID'",
-    "message": "What is machine learning?"
-  }'
-
-# Continue conversation (use session_id from previous response)
-curl -X POST http://localhost:8000/chat \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "project_id": "'$PROJECT_ID'",
-    "session_id": "'$SESSION_ID'",
-    "message": "Can you explain neural networks?"
-  }'
-```
-
-## Development
-
-### Code Style
-
-The project uses:
-- **Black**: Code formatting
-- **Ruff**: Linting
-- **Type hints**: Throughout the codebase
-
-Run formatters:
-```bash
-poetry run black backend/
-poetry run ruff check backend/ --fix
-```
-
-### Testing
-
-```bash
-poetry run pytest
-```
-
 ### Database Console
 
 Access PostgreSQL:
@@ -542,21 +453,6 @@ docker-compose up -d
 3. **Database**: Consider read replicas for high read loads
 4. **LLM Calls**: Implement queueing for high-volume scenarios
 
-### Deployment Example (Docker)
-
-```bash
-# Build production image
-docker build -t chatbot-platform:latest .
-
-# Run with production settings
-docker run -d \
-  --name chatbot-api \
-  -e DATABASE_URL=$DATABASE_URL \
-  -e SECRET_KEY=$SECRET_KEY \
-  -e OPENAI_API_KEY=$OPENAI_API_KEY \
-  -p 8000:8000 \
-  chatbot-platform:latest
-```
 
 ## Architecture Decisions
 
@@ -615,36 +511,6 @@ poetry run alembic history
 poetry run alembic downgrade -1
 ```
 
-### LLM Provider Errors
-
-```bash
-# Test OpenAI connection
-curl https://api.openai.com/v1/models \
-  -H "Authorization: Bearer $OPENAI_API_KEY"
-
-# Check provider configuration
-grep LLM_PROVIDER .env
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Run formatters and linters
-6. Submit a pull request
-
 ## License
 
 MIT License - see LICENSE file for details
-
-## Support
-
-For issues and questions:
-- GitHub Issues: [repository]/issues
-- Email: support@example.com
-
----
-
-Built with ❤️ using FastAPI and modern Python practices.
