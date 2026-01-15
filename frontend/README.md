@@ -1,14 +1,6 @@
-# Chatbot Platform - React Frontend (Updated & Secured)
+# Chatbot Platform - React Frontend
 
-A modern React frontend with **security vulnerabilities fixed** and ESLint warnings resolved.
-
-## ✅ What's Fixed
-
-- **Updated dependencies** to latest secure versions
-- **Fixed React Hook warnings** using `useCallback`
-- **Added dependency overrides** for transitive vulnerabilities
-- **Clean npm audit** - no critical vulnerabilities
-- **Updated axios** to latest version (1.7.9)
+A modern React frontend for ChatBot Platform.
 
 ## Quick Start
 
@@ -26,17 +18,6 @@ npm start
 ```
 
 Opens at `http://localhost:3000`
-
-## Security Updates
-
-This version includes:
-
-1. **Updated React Scripts** with security patches
-2. **Dependency Overrides** for vulnerable transitive dependencies:
-   - `nth-check` → 2.1.1+
-   - `postcss` → 8.4.31+
-   - `webpack-dev-server` → 5.2.1+
-3. **Latest Axios** (1.7.9) with security fixes
 
 ## Clean Installation
 
@@ -70,6 +51,7 @@ npm audit
 ## Development
 
 All features from the original version:
+
 - ✅ Authentication (login/register)
 - ✅ Project management
 - ✅ System prompts
@@ -78,7 +60,7 @@ All features from the original version:
 
 ## Project Structure
 
-```
+```sh
 frontend/
 ├── public/
 │   └── index.html
@@ -117,7 +99,6 @@ Creates optimized build in `build/` folder.
 
 ## Troubleshooting
 
-### Still seeing vulnerabilities?
 
 1. Delete `node_modules` and `package-lock.json`:
    ```bash
@@ -138,29 +119,6 @@ Creates optimized build in `build/` folder.
 
 The package.json includes `overrides` to force secure versions of transitive dependencies. Some warnings may still appear for dev dependencies that don't affect production.
 
-### CORS Issues?
-
-Ensure your FastAPI backend has proper CORS configuration:
-
-```python
-from fastapi.middleware.cors import CORSMiddleware
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-```
-
-## What Changed from v1?
-
-1. **package.json**: Updated all dependencies, added overrides
-2. **App.js**: Added `useCallback` to fix ESLint warnings
-3. **PromptsManager.js**: Added `useCallback` to fix ESLint warnings
-4. **Functionality**: Everything else remains the same
-
 ## Scripts
 
 - `npm start` - Start development server
@@ -168,11 +126,6 @@ app.add_middleware(
 - `npm test` - Run tests
 - `npm run eject` - Eject from CRA (not recommended)
 
-## Browser Support
-
-- Chrome/Edge (latest)
-- Firefox (latest)
-- Safari (latest)
 
 ## License
 
