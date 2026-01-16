@@ -30,10 +30,10 @@
 │               Business Logic Layer                      │
 │                  (Service Classes)                      │
 │                                                         │
-│  ┌──────────────────┐         ┌──────────────────┐       
+│  ┌──────────────────┐         ┌──────────────────┐
 │  │  Chat Service    │◄────────┤  LLM Provider    │      │
 │  │  - Session Mgmt  │         │   Abstraction    │      │
-│  │  - Message Build │         │  - OpenAI        │      │
+│  │  - Message Build │         │  - Groq          │      │
 │  │  - Response Gen  │         │  - OpenRouter    │      │
 │  └────────┬─────────┘         └──────────────────┘      │
 └───────────┼─────────────────────────────────────────────┘
@@ -53,13 +53,6 @@
 │  └──────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────┘
 
-┌─────────────────────────────────────────────────────────┐
-│                External Services                        │
-│  ┌──────────────┐              ┌──────────────┐        │
-│  │   OpenAI     │              │  OpenRouter  │        │
-│  │     API      │              │     API      │        │
-│  └──────────────┘              └──────────────┘        │
-└─────────────────────────────────────────────────────────┘
 ```
 
 ## Request Flow: Chat Message
@@ -88,7 +81,7 @@
    │       - Chat history
    │
    └─► 5b. Call LLM Provider
-       │   - OpenAI or OpenRouter
+       │   - Groq,OpenAI or OpenRouter
        │   - Async HTTP request
        │   - Handle timeout/errors
        ▼
@@ -232,6 +225,7 @@ Benefits:
 ```
 
 ### Docker Compose
+
 ```
 ┌─────────────────────────────────┐
 │     Docker Host                 │
@@ -253,6 +247,7 @@ Benefits:
 ```
 
 ### Production
+
 ```
 ┌────────────────────────────────────────┐
 │         Load Balancer / CDN            │
@@ -281,12 +276,14 @@ Benefits:
 ## Technology Decisions
 
 ### Why Async?
+
 - Non-blocking I/O for database operations
 - Concurrent handling of LLM API calls
 - Better resource utilization
 - Scales horizontally with minimal overhead
 
 ### Why PostgreSQL?
+
 - ACID compliance for data integrity
 - Strong typing and constraints
 - Excellent async support (asyncpg)
@@ -294,12 +291,14 @@ Benefits:
 - Native UUID support
 
 ### Why JWT?
+
 - Stateless authentication
 - No server-side session storage
 - Easy horizontal scaling
 - Standard format with library support
 
 ### Why Provider Abstraction?
+
 - Flexibility to switch LLM providers
 - Test without real API calls
 - Support multiple providers
@@ -308,6 +307,7 @@ Benefits:
 ## Scalability Considerations
 
 ### Horizontal Scaling
+
 - Stateless design allows infinite horizontal scaling
 - No shared memory between instances
 - Database handles concurrency
