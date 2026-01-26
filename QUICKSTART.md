@@ -63,7 +63,7 @@ python test_api.py
 ```bash
 # Install frontend dependencies
 cd frontend
-pip install -r requirements.txt
+
 ```
 
 # Start Fronend

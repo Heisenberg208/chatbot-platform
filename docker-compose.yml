@@ -22,8 +22,8 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql+asyncpg://chatbot:chatbot_password@db:5432/chatbot_db
-      SECRET_KEY: your-secret-key-change-in-production
+      DATABASE_URL: ${DATABASE_URL}
+      SECRET_KEY: ${SECRET_KEY}
       LLM_PROVIDER: groq
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
