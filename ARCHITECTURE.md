@@ -150,7 +150,7 @@
 ├──────────────────────────────────────────┤
 │                                          │
 │  1. Transport Security                  │
-│     ├─ HTTPS/TLS encryption             │
+│     ├─ HTTPS encryption                 │
 │     └─ Secure headers                   │
 │                                          │
 │  2. Authentication                      │
@@ -174,35 +174,6 @@
 │     └─ Sensitive data encrypted         │
 │                                          │
 └──────────────────────────────────────────┘
-```
-
-## LLM Provider Abstraction
-
-```
-┌─────────────────────────────────────┐
-│       LLMProvider (Interface)       │
-│─────────────────────────────────────│
-│ + generate(messages) → str          │
-│ + validate_connection() → bool      │
-└──────────────┬──────────────────────┘
-               │
-       ┌───────┴───────┐
-       │               │
-       ▼               ▼
-┌─────────────┐ ┌──────────────┐
-│  OpenAI     │ │ OpenRouter   │
-│  Provider   │ │  Provider    │
-│─────────────│ │──────────────│
-│ - API key   │ │ - API key    │
-│ - Timeout   │ │ - Timeout    │
-│ - Model     │ │ - Model      │
-└─────────────┘ └──────────────┘
-
-Benefits:
-• Easy to switch providers
-• Test with mock providers
-• Support multiple providers
-• Isolate provider-specific code
 ```
 
 ## Deployment Architecture
@@ -244,33 +215,6 @@ Benefits:
 │  │  Docker Network           │ │
 │  └───────────────────────────┘ │
 └─────────────────────────────────┘
-```
-
-### Production
-
-```
-┌────────────────────────────────────────┐
-│         Load Balancer / CDN            │
-│            (nginx/ALB)                 │
-└──────────────┬─────────────────────────┘
-               │
-    ┌──────────┴──────────┐
-    │                     │
-    ▼                     ▼
-┌─────────┐         ┌─────────┐
-│ Backend │         │ Backend │
-│  Pod 1  │ ...     │  Pod N  │
-└────┬────┘         └────┬────┘
-     │                   │
-     └─────────┬─────────┘
-               │
-               ▼
-     ┌──────────────────┐
-     │   Database       │
-     │   (RDS/Managed)  │
-     │   - Primary      │
-     │   - Read Replica │
-     └──────────────────┘
 ```
 
 ## Technology Decisions

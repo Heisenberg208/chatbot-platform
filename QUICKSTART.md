@@ -17,8 +17,17 @@ cp .env.example .env
 
 Edit `.env` file and add your API key:
 
+Set a strong `SECRET_KEY` for JWT signing and store it in an environment variable.
+
+Example:
+
+```bash
+openssl rand -hex 32
+```
+
 ```bash
 # For Groq (FREE and FAST - Recommended!)
+SECRET_KEY=paste the generated key here.
 LLM_PROVIDER=groq
 GROQ_API_KEY=gsk-your-key-here  # Get free key at https://console.groq.com/keys
 
@@ -56,9 +65,10 @@ python test_api.py
 cd frontend
 pip install -r requirements.txt
 ```
-# Start Fronend
-[Frontend Readme](frontend/README.md)
 
+# Start Fronend
+
+[Frontend Readme](frontend/README.md)
 
 Open http://localhost:8501 in your browser.
 
@@ -118,6 +128,7 @@ docker-compose exec db psql -U chatbot -d chatbot_db
 ## Troubleshooting
 
 ### Database Connection Issues
+
 ```bash
 # Check if PostgreSQL is running
 docker-compose ps
@@ -127,6 +138,7 @@ docker-compose restart db
 ```
 
 ### API Not Responding
+
 ```bash
 # Check logs
 docker-compose logs backend
@@ -136,6 +148,7 @@ docker-compose restart backend
 ```
 
 ### LLM Provider Errors
+
 - Verify your API key is correct in `.env`
 - Check if you have sufficient API credits
 - Ensure `LLM_PROVIDER` matches your API key type

@@ -1,8 +1,6 @@
 # Chatbot Platform
 
-A production-ready, multi-tenant chatbot platform built with FastAPI, PostgreSQL, and LLM integration. This platform enables users to create AI-powered chatbots (agents) with customizable system prompts and persistent chat sessions.
-
-
+A multi-tenant chatbot platform built with FastAPI, PostgreSQL, and LLM integration. This platform enables users to create AI-powered chatbots (agents) with customizable system prompts and persistent chat sessions.
 
 ## Table of Contents
 
@@ -13,8 +11,6 @@ A production-ready, multi-tenant chatbot platform built with FastAPI, PostgreSQL
 - [Setup Instructions](#setup-instructions)
 - [Environment Variables](#environment-variables)
 - [API Documentation](#api-documentation)
-- [Usage Flow](#usage-flow)
-- [Development](#development)
 - [Production Considerations](#production-considerations)
 
 ## Architecture Overview
@@ -59,7 +55,7 @@ The platform follows a clean, layered architecture:
 - **Project Management**: Create and manage multiple chatbot projects (agents)
 - **Custom Prompts**: Define system prompts to customize agent behavior
 - **Chat Sessions**: Persistent conversation history per project
-- **LLM Integration**: Support for Groq (FREE!), OpenAI, and OpenRouter APIs
+- **LLM Integration**: Support for Groq (FREE!) default.
 - **Multi-tenant**: Complete user isolation and data security
 - **Database Migrations**: Alembic for version-controlled schema changes
 - **Docker Support**: Containerized deployment with Docker Compose
@@ -67,6 +63,7 @@ The platform follows a clean, layered architecture:
 ## Tech Stack
 
 ### Backend
+
 - **Python 3.11+**: Modern Python with type hints
 - **FastAPI**: High-performance async web framework
 - **SQLAlchemy 2.0**: Async ORM with type-safe queries
@@ -75,19 +72,19 @@ The platform follows a clean, layered architecture:
 - **Pydantic v2**: Data validation and settings management
 
 ### Authentication
+
 - **JWT**: JSON Web Tokens for stateless auth
 - **OAuth2**: Password flow implementation
 - **bcrypt**: Secure password hashing
 
 ### LLM Providers
-- **Groq API**: Fast inference with FREE tier (recommended!)
-  - Llama 3.3 70B, Mixtral, Gemma 2, and more
-  - 30 requests/minute free
-  - 10-100x faster than traditional APIs
+
+- **Groq API**: Used as the default LLM provider due to free-tier availability and low-latency inference for demos.
 - **OpenAI API**: GPT-3.5/GPT-4 integration (paid)
 - **OpenRouter**: Multi-model API gateway (paid)
 
 ### Infrastructure
+
 - **Docker**: Containerization
 - **Poetry**: Python dependency management
 - **asyncpg**: High-performance async PostgreSQL driver
@@ -157,28 +154,33 @@ chatbot-platform/
 ### Local Development Setup
 
 1. **Clone the repository**:
+
 ```bash
 git clone https://github.com/Heisenberg208/chatbot-platform.git
 cd chatbot-platform
 ```
 
 1. **Install Poetry** (if not already installed):
+
 ```bash
 curl -sSL https://install.python-poetry.org | python3 -
 ```
 
 1. **Install dependencies**:
+
 ```bash
 poetry install
 ```
 
 1. **Set up environment variables**:
+
 ```bash
 cp .env.example .env
 # Edit .env with your configuration
 ```
 
 1. **Start PostgreSQL** (if not using Docker):
+
 ```bash
 # Using Docker for just the database
 docker run -d \
@@ -191,17 +193,20 @@ docker run -d \
 ```
 
 1. **Run database migrations**:
+
 ```bash
 cd backend
 poetry run alembic upgrade head
 ```
 
 1. **Start the development server**:
+
 ```bash
 poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 1. **Access the API**:
+
 - API: http://localhost:8000
 - Interactive docs: http://localhost:8000/docs
 - Alternative docs: http://localhost:8000/redoc
@@ -209,22 +214,26 @@ poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ### Docker Setup (Recommended)
 
 1. **Set environment variables**:
+
 ```bash
 cp .env.example .env
 # Edit .env with your API keys
 ```
 
 2. **Start all services**:
+
 ```bash
 docker-compose up -d
 ```
 
 3. **Check logs**:
+
 ```bash
 docker-compose logs -f backend
 ```
 
 4. **Access the API**:
+
 - API: http://localhost:8000
 - Docs: http://localhost:8000/docs
 
@@ -244,32 +253,33 @@ Create a `.env` file based on `.env.example`:
 
 ### Required Variables
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `DATABASE_URL` | PostgreSQL connection string | `postgresql+asyncpg://user:pass@localhost:5432/db` |
-| `SECRET_KEY` | JWT signing key (generate with `openssl rand -hex 32`) | `your-secret-key` |
-| `LLM_PROVIDER` | LLM provider to use (`groq`, `openai`, or `openrouter`) | `groq` |
-| `GROQ_API_KEY` | **Groq API key (FREE!)** - Get at https://console.groq.com/keys | `gsk-...` |
-| `OPENAI_API_KEY` | OpenAI API key (if using OpenAI - paid) | `sk-...` |
-| `OPENROUTER_API_KEY` | OpenRouter API key (if using OpenRouter - paid) | `sk-or-v1-...` |
+| Variable             | Description                                                     | Example                                            |
+| -------------------- | --------------------------------------------------------------- | -------------------------------------------------- |
+| `DATABASE_URL`       | PostgreSQL connection string                                    | `postgresql+asyncpg://user:pass@localhost:5432/db` |
+| `SECRET_KEY`         | JWT signing key (generate with `openssl rand -hex 32`)          | `your-secret-key`                                  |
+| `LLM_PROVIDER`       | LLM provider to use (`groq`, `openai`, or `openrouter`)         | `groq`                                             |
+| `GROQ_API_KEY`       | **Groq API key (FREE!)** - Get at https://console.groq.com/keys | `gsk-...`                                          |
+| `OPENAI_API_KEY`     | OpenAI API key (if using OpenAI - paid)                         | `sk-...`                                           |
+| `OPENROUTER_API_KEY` | OpenRouter API key (if using OpenRouter - paid)                 | `sk-or-v1-...`                                     |
 
 ### Optional Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `ALGORITHM` | JWT algorithm | `HS256` |
-| `ACCESS_TOKEN_EXPIRE_MINUTES` | Token expiration time | `30` |
-| `DEBUG` | Debug mode | `false` |
-| `LLM_MODEL` | Model to use | `llama-3.3-70b-versatile` (Groq) |
-| `LLM_TEMPERATURE` | Response randomness (0-2) | `0.7` |
-| `LLM_MAX_TOKENS` | Max response length | `1000` |
-| `LLM_TIMEOUT` | LLM request timeout (seconds) | `30` |
+| Variable                      | Description                   | Default                          |
+| ----------------------------- | ----------------------------- | -------------------------------- |
+| `ALGORITHM`                   | JWT algorithm                 | `HS256`                          |
+| `ACCESS_TOKEN_EXPIRE_MINUTES` | Token expiration time         | `30`                             |
+| `DEBUG`                       | Debug mode                    | `false`                          |
+| `LLM_MODEL`                   | Model to use                  | `llama-3.3-70b-versatile` (Groq) |
+| `LLM_TEMPERATURE`             | Response randomness (0-2)     | `0.7`                            |
+| `LLM_MAX_TOKENS`              | Max response length           | `1000`                           |
+| `LLM_TIMEOUT`                 | LLM request timeout (seconds) | `30`                             |
 
 ## API Documentation
 
 ### Authentication
 
 #### Register a new user
+
 ```http
 POST /auth/register
 Content-Type: application/json
@@ -281,6 +291,7 @@ Content-Type: application/json
 ```
 
 Response:
+
 ```json
 {
   "id": "uuid",
@@ -290,6 +301,7 @@ Response:
 ```
 
 #### Login
+
 ```http
 POST /auth/login
 Content-Type: application/x-www-form-urlencoded
@@ -298,6 +310,7 @@ username=user@example.com&password=securepassword123
 ```
 
 Response:
+
 ```json
 {
   "access_token": "eyJ0eXAiOiJKV1QiLCJhbGc...",
@@ -310,6 +323,7 @@ Response:
 All project endpoints require authentication (`Authorization: Bearer <token>`).
 
 #### Create a project
+
 ```http
 POST /projects
 Authorization: Bearer <token>
@@ -322,12 +336,14 @@ Content-Type: application/json
 ```
 
 #### List projects
+
 ```http
 GET /projects
 Authorization: Bearer <token>
 ```
 
 #### Get specific project
+
 ```http
 GET /projects/{project_id}
 Authorization: Bearer <token>
@@ -336,6 +352,7 @@ Authorization: Bearer <token>
 ### Prompts
 
 #### Create a prompt
+
 ```http
 POST /projects/{project_id}/prompts
 Authorization: Bearer <token>
@@ -347,6 +364,7 @@ Content-Type: application/json
 ```
 
 #### List prompts
+
 ```http
 GET /projects/{project_id}/prompts
 Authorization: Bearer <token>
@@ -355,6 +373,7 @@ Authorization: Bearer <token>
 ### Chat
 
 #### Send a message
+
 ```http
 POST /chat
 Authorization: Bearer <token>
@@ -368,6 +387,7 @@ Content-Type: application/json
 ```
 
 Response:
+
 ```json
 {
   "session_id": "uuid",
@@ -391,6 +411,7 @@ Response:
 ### Database Console
 
 Access PostgreSQL:
+
 ```bash
 docker-compose exec db psql -U chatbot -d chatbot_db
 ```
@@ -416,20 +437,21 @@ docker-compose up -d
 
 ### Security
 
-1. **Change SECRET_KEY**: Generate a strong secret key:
+1. **Secret Management**
+
+   Set a strong `SECRET_KEY` for JWT signing and store it in an environment variable.
+
+   Example:
+
    ```bash
    openssl rand -hex 32
    ```
 
-2. **HTTPS Only**: Deploy behind a reverse proxy (nginx) with SSL/TLS
+2. **CORS Configuration**: Restrict allowed origins in production
 
-3. **CORS Configuration**: Restrict allowed origins in production
+3. **Environment Variables**: Use secrets management
 
-4. **Environment Variables**: Use secrets management (AWS Secrets Manager, HashiCorp Vault)
-
-5. **Rate Limiting**: Implement rate limiting for API endpoints
-
-6. **Input Validation**: Already implemented via Pydantic
+4. **Input Validation**: Already implemented via Pydantic
 
 ### Performance
 
@@ -448,11 +470,12 @@ docker-compose up -d
 
 ### Scaling
 
+The following items are architectural considerations for future scalability and are not implemented in the current deployment.
+
 1. **Horizontal Scaling**: Stateless design allows easy horizontal scaling
 2. **Load Balancing**: Use nginx or cloud load balancer
 3. **Database**: Consider read replicas for high read loads
 4. **LLM Calls**: Implement queueing for high-volume scenarios
-
 
 ## Architecture Decisions
 

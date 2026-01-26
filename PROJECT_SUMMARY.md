@@ -2,7 +2,7 @@
 
 ## What Has Been Built
 
-A **production-ready, multi-tenant chatbot platform** with clean architecture, comprehensive error handling, and LLM integration.
+A **multi-tenant chatbot platform** with clean architecture, comprehensive error handling, and LLM integration.
 
 ## ✅ Completed Features
 
@@ -54,7 +54,7 @@ A **production-ready, multi-tenant chatbot platform** with clean architecture, c
 
 ### Infrastructure
 
-- ✅ **Docker**: Complete containerization
+- ✅ **Docker**: Containerized local and demo deployment
 - ✅ **Docker Compose**: Multi-container orchestration
 - ✅ **Poetry**: Modern dependency management
 - ✅ **Environment Config**: `.env` based configuration
@@ -76,9 +76,8 @@ A **production-ready, multi-tenant chatbot platform** with clean architecture, c
 
 ### Testing & Development
 
-- ✅ **Test Script**: Complete API flow test (`test_api.py`)
+- ✅ **Test Script**: Basic API flow test script (`test_api.py`)
 - ✅ **Test Structure**: Pytest setup
-- ✅ **Makefile**: Common development tasks
 - ✅ **Type Hints**: Throughout the codebase
 
 ## 📁 Project Structure
@@ -92,7 +91,6 @@ chatbot-platform/
 ├── docker-compose.yml          # Docker orchestration
 ├── Dockerfile                  # Container definition
 ├── .env.example                # Environment template
-├── Makefile                    # Development tasks
 ├── test_api.py                 # API test script
 │
 ├── backend/                    # Backend application
@@ -163,6 +161,7 @@ python test_api.py
 ```
 
 ### Option 2: Local Development
+
 ```bash
 poetry install
 cd backend
@@ -178,8 +177,8 @@ cd frontend
 ```
 
 ### Frontend UI
-[Frontend Readme](frontend/README.md)
 
+[Frontend Readme](frontend/README.md)
 
 ## 📚 Key Files to Review
 
@@ -194,15 +193,13 @@ cd frontend
 ## 🔑 Configuration Required
 
 Edit `.env` file:
+
 ```bash
 DATABASE_URL=postgresql+asyncpg://...
 SECRET_KEY=your-secret-key-here
 LLM_PROVIDER=groq
 GROQ_API_KEY=gsk-...  # FREE! Get at https://console.groq.com/keys
 ```
-
-> **💡 Pro Tip**: Groq offers a FREE tier with 30 requests/minute. Perfect for development!
-> See [GROQ_SETUP.md](GROQ_SETUP.md) for detailed setup instructions.
 
 ## 🧪 Testing
 
@@ -227,21 +224,23 @@ open http://localhost:8000/docs
 5. Chat: POST /chat
 ```
 
-
 ## 🏗️ Architecture Highlights
 
 ### Request Flow
+
 ```
 Client → FastAPI Route → Auth Middleware → Service Layer → Database/LLM
 ```
 
 ### Database Schema
+
 ```
 User (1:N) → Project (1:N) → Prompt
                       (1:N) → ChatSession (1:N) → Message
 ```
 
 ### LLM Abstraction
+
 ```
 LLMProvider (interface)
     ├── OpenAIProvider
@@ -277,7 +276,6 @@ LLMProvider (interface)
 
 ## 🛠️ Developer Tools
 
-- **Makefile**: Common commands
 - **Poetry**: Dependency management
 - **Alembic**: Database migrations
 - **Docker**: Containerization
@@ -287,6 +285,7 @@ LLMProvider (interface)
 ## 🌟 Production Considerations
 
 Documented in README.md:
+
 - Secret management
 - HTTPS/TLS
 - Rate limiting
@@ -338,7 +337,6 @@ Documented in README.md:
 - ✅ Error handling implemented
 - ✅ Security best practices
 - ✅ Clean architecture
-- ✅ Production-ready code
 - ✅ Comprehensive documentation
 - ✅ Working examples
 
